@@ -25,9 +25,13 @@ export function SignIn() {
   const { signIn, isLoggingIn } = useAuth();
   const theme = useTheme();
 
-  // creates a function to handle sign in
-    // try to call and wait signIn
-    // if fails, display an Alert with the title "Erro SignIn" and message "Ocorreu um erro ao tentar logar no app"
+  async function handleSignin(){
+    try {
+      await signIn();
+    } catch (error) {
+      Alert.alert('Erro sigin', 'Ocorreu um erro ao tentar logar no app');
+    }
+  }
 
     // const signInButtonProps = {
     //   onPress: your-signIn-function
@@ -65,19 +69,32 @@ export function SignIn() {
             o mundo da Twitch
           </Description>
 
-          {/* <SignInButton {...signInButtonProps}>
+          <SignInButton onPress={handleSignin}>
             <SignInButtonIcon>
-              Verify if isLoggingIn is true
-              If it is, show an ActivityIndicator
-              Otherwise, show Fontisto's twitch icon
+              {isLoggingIn ? (
+                <ActivityIndicator
+                size={20}
+                color={theme.colors.white}
+                />
+ 
+              ):
+              (
+                <Fontisto
+                name="twitch"
+                size={20}
+                color={theme.colors.white}
+                sytle={{
+                  marginRight: 1
+                }}
+                />
+
+              )}
             </SignInButtonIcon>
 
             <SignInButtonText>
-              Verify if isLoggingIn is true
-              If it is, show "Entrando..."
-              Otherwise, show "Entrar com Twitch"
+              {isLoggingIn ? 'Entrando' : 'Entrar com twitch '}
             </SignInButtonText>
-          </SignInButton> */}
+          </SignInButton> 
         </LoginInfo>
       </Content>
 
